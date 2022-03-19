@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_list_checklist">22dp</dimen>
     <dimen name="title_size">45sp</dimen>
     <dimen name="subtitle_size">25sp</dimen>
     <dimen name="text_margin">16dp</dimen>

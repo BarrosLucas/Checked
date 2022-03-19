@@ -62,7 +62,7 @@ public class CheckListPersistence {
         return true;
     }
 
-    public boolean deleteChecklist(int id){
+    public boolean deleteChecklist(long id){
         int result;
 
         String where = CheckedDatabase.CHECKLIST_ID + " = " +id;
@@ -131,15 +131,22 @@ public class CheckListPersistence {
 
         if(cursor!=null){
             if(cursor.moveToFirst()) {
-                do {
-                    ItemChecklist item = new ItemChecklist();
+                ItemChecklist item = new ItemChecklist();
+                item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.CHECKLIST_ID)));
+                item.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(CheckedDatabase.CHECKLIST_TITLE)));
+                item.setTaskList((new ItemListPersistence(context)).selectByChecklist(item.getId()));
+                item.setDefault(((cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.CHECKLIST_ID)))==1)? true: false);
+
+                checklists.add(item);
+                while(cursor.moveToNext()) {
+                    item = new ItemChecklist();
                     item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.CHECKLIST_ID)));
                     item.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(CheckedDatabase.CHECKLIST_TITLE)));
                     item.setTaskList((new ItemListPersistence(context)).selectByChecklist(item.getId()));
                     item.setDefault(((cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.CHECKLIST_ID)))==1)? true: false);
 
                     checklists.add(item);
-                }while(cursor.isAfterLast());
+                }
             }
         }
 

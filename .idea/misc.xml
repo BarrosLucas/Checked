@@ -12,8 +12,10 @@
         <entry key="app/src/main/res/layout/drawer_navigation.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/fragment_check_list.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/fragment_checklists.xml" value="0.21" />
         <entry key="app/src/main/res/layout/fragment_default.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_item_checklists.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.25037481259370314" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.22" />

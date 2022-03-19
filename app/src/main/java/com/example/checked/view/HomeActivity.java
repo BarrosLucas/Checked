@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.example.checked.R;
 import com.example.checked.infra.CheckListPersistence;
 import com.example.checked.utils.ViewDialog;
+import com.example.checked.view.fragment.ChecklistsFragment;
 import com.example.checked.view.fragment.DefaultFragment;
 import com.example.checked.view.fragment.FragmentBase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +27,7 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
     private ImageView menu;
     private FloatingActionButton floatingActionButton;
     private FragmentBase fragmentBase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawer.openDrawer(Gravity.START);
+                drawer.openDrawer(Gravity.LEFT);
             }
         });
 
@@ -64,17 +66,37 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
                 beginTransaction().
                 add(R.id.container, fragmentBase, "default_fragment").
                 commit();
+
+    }
+
+    public void updateContent(FragmentBase fragmentBase){
+
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.container, fragmentBase).
+                commit();
+    }
+
+    public void updateContentToList(){
+        fragmentBase = DefaultFragment.newInstance(idChecklist);
+
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.container, fragmentBase).
+                commit();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_home:
-                goToListItem();
+                fragmentBase = DefaultFragment.newInstance(idChecklist);
+                updateContent(fragmentBase);
                 page = 0;
                 return true;
             case R.id.nav_checklists:
-                goToListItem();
+                fragmentBase = ChecklistsFragment.newInstance((view -> {updateContentToList();}));
+                updateContent(fragmentBase);
                 page = 1;
                 return true;
             default:

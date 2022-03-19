@@ -3,6 +3,10 @@ package com.example.checked.view.fragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,41 +14,30 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.example.checked.R;
-import com.example.checked.infra.ItemListPersistence;
-import com.example.checked.utils.ViewDialog;
-import com.example.checked.view.adapter.TaskItemRecyclerViewAdapter;
 import com.example.checked.infra.CheckListPersistence;
+import com.example.checked.model.ItemChecklist;
 import com.example.checked.model.ItemTask;
 import com.example.checked.utils.SwipeToDeleteCallback;
+import com.example.checked.utils.ViewDialog;
+import com.example.checked.view.adapter.ChecklistItemRecyclerViewAdapter;
+import com.example.checked.view.adapter.TaskItemRecyclerViewAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
-import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DefaultFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DefaultFragment extends FragmentBase {
-    private TaskItemRecyclerViewAdapter mAdapter;
+public class  ChecklistsFragment extends FragmentBase {
+    private ChecklistItemRecyclerViewAdapter mAdapter;
     private RecyclerView recyclerView;
-    private long idChecklist;
-    private TextView currentDay;
+    private View.OnClickListener onClickItem;
 
-    public DefaultFragment(long idChecklist) {
-        this.idChecklist = idChecklist;
+    public ChecklistsFragment(View.OnClickListener onClickItem) {
+        this.onClickItem = onClickItem;
     }
 
 
-    public static DefaultFragment newInstance(long idChecklist) {
-        DefaultFragment fragment = new DefaultFragment(idChecklist);
+    public static ChecklistsFragment newInstance(View.OnClickListener onClickItem) {
+        ChecklistsFragment fragment = new ChecklistsFragment(onClickItem);
         return fragment;
     }
 
@@ -57,14 +50,11 @@ public class DefaultFragment extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_default, container, false);
+        View view = inflater.inflate(R.layout.fragment_checklists, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.list_checklists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        currentDay = (TextView) view.findViewById(R.id.current_day);
-
-        currentDay.setText(setDay());
         updateList();
 
         return view;
@@ -76,7 +66,7 @@ public class DefaultFragment extends FragmentBase {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
                 final int position = viewHolder.getAdapterPosition();
-                final ItemTask item = mAdapter.mValues.get(position);
+                final ItemChecklist item = mAdapter.mValues.get(position);
 
                 if(mAdapter.deleteItem(getContext(), position)){
                     Snackbar snackbar = Snackbar
@@ -104,7 +94,7 @@ public class DefaultFragment extends FragmentBase {
 
     @Override
     public void addItem(){
-        (new ViewDialog()).showDialogNewTask(getActivity(),idChecklist).setOnDismissListener(
+        (new ViewDialog()).showDialogNewChecklist(getActivity()).setOnDismissListener(
                 new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
@@ -115,60 +105,9 @@ public class DefaultFragment extends FragmentBase {
     }
 
     private void updateList(){
-        mAdapter = new TaskItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectDefault().getTaskList());
+        mAdapter = new ChecklistItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectAll(), onClickItem);
         recyclerView.setAdapter(mAdapter);
         enableSwipeToDelete();
-    }
-
-    private String setDay(){
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-
-        String date = day+" de ";
-        switch (month){
-            case 1:
-                date += "Janeiro de ";
-                break;
-            case 2:
-                date += "Fevereiro de ";
-                break;
-            case 3:
-                date += "Março de ";
-                break;
-            case 4:
-                date += "Abril de ";
-                break;
-            case 5:
-                date += "Maio de ";
-                break;
-            case 6:
-                date += "Junho de ";
-                break;
-            case 7:
-                date += "Julho de ";
-                break;
-            case 8:
-                date += "Agosto de ";
-                break;
-            case 9:
-                date += "Setembro de ";
-                break;
-            case 10:
-                date += "Outubro de ";
-                break;
-            case 11:
-                date += "Novembro de ";
-                break;
-            case 12:
-                date += "Dezembro de ";
-                break;
-
-        }
-        date += year;
-
-        return date;
     }
 
 }
