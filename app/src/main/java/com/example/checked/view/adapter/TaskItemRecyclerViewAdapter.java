@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.example.checked.infra.ItemListPersistence;
 import com.example.checked.model.ItemTask;
@@ -33,6 +34,15 @@ public class TaskItemRecyclerViewAdapter extends RecyclerView.Adapter<TaskItemRe
         holder.mItem = mValues.get(position);
         holder.mCheck.setChecked(mValues.get(position).isDone());
         holder.mCheck.setText(mValues.get(position).getTitle());
+
+        holder.mCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                long idItem = mValues.get(holder.getAbsoluteAdapterPosition()).getId();
+
+                (new ItemListPersistence(compoundButton.getContext())).updateChecklist(idItem,mValues.get(holder.getAbsoluteAdapterPosition()).getTitle(), b);
+            }
+        });
     }
 
     public boolean deleteItem(Context context, int position){

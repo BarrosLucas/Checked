@@ -14,10 +14,11 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_default">
             <TextView
+                android:id="@+id/current_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/jua"
-                android:layout_alignPbarentEnd="true"
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/subtitle_size"
                 android:text="18 de março de 2022" />

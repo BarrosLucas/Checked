@@ -132,15 +132,23 @@ public class ItemListPersistence {
                 null);
 
         if(cursor.moveToFirst()){
-            do{
-                ItemTask item = new ItemTask();
+            ItemTask item = new ItemTask();
+            item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_ID)));
+            item.setDone((cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_DONE))) == 1? true:false);
+            item.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_TITLE)));
+            item.setIdList(cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_ID_CHECK)));
+
+            tasks.add(item);
+
+            while(cursor.moveToNext()){
+                item = new ItemTask();
                 item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_ID)));
                 item.setDone((cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_DONE))) == 1? true:false);
                 item.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_TITLE)));
                 item.setIdList(cursor.getInt(cursor.getColumnIndexOrThrow(CheckedDatabase.ITEM_ID_CHECK)));
 
                 tasks.add(item);
-            }while(cursor.isAfterLast());
+            }
         }
 
         return tasks;
