@@ -76,7 +76,7 @@ public class CheckListPersistence {
         return true;
     }
 
-    public ItemChecklist selectByID(int id){
+    public ItemChecklist selectByID(long id){
         ItemChecklist item = null;
         Cursor cursor;
 

@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.checked.R;
 import com.example.checked.infra.CheckListPersistence;
@@ -26,7 +27,8 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
     private DrawerLayout drawerLayout;
     private ImageView menu;
     private FloatingActionButton floatingActionButton;
-    private FragmentBase fragmentBase;
+    public static FragmentBase fragmentBase;
+    private TextView titlePage;
 
 
     @Override
@@ -37,11 +39,13 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        titlePage = (TextView) findViewById(R.id.title_page);
 
         menu = (ImageView) findViewById(R.id.menu);
         floatingActionButton = (FloatingActionButton)findViewById(R.id.floating);
@@ -50,7 +54,7 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawer.openDrawer(Gravity.LEFT);
+                drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
 
@@ -60,7 +64,7 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
     }
 
     private void goToListItem(){
-        fragmentBase = DefaultFragment.newInstance(idChecklist);
+        fragmentBase = DefaultFragment.newInstance(idChecklist,titlePage);
 
         getSupportFragmentManager().
                 beginTransaction().
@@ -77,29 +81,23 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
                 commit();
     }
 
-    public void updateContentToList(){
-        fragmentBase = DefaultFragment.newInstance(idChecklist);
-
-        getSupportFragmentManager().
-                beginTransaction().
-                replace(R.id.container, fragmentBase).
-                commit();
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_home:
-                fragmentBase = DefaultFragment.newInstance(idChecklist);
+                fragmentBase = DefaultFragment.newInstance(idChecklist, titlePage);
                 updateContent(fragmentBase);
                 page = 0;
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.nav_checklists:
-                fragmentBase = ChecklistsFragment.newInstance((view -> {updateContentToList();}));
+                fragmentBase = ChecklistsFragment.newInstance(getSupportFragmentManager(), titlePage);
                 updateContent(fragmentBase);
                 page = 1;
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 return true;
             default:
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 return super.onOptionsItemSelected(item);
         }
     }

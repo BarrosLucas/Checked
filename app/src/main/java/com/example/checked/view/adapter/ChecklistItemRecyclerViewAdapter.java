@@ -7,22 +7,28 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.checked.R;
 import com.example.checked.databinding.FragmentItemChecklistsBinding;
 import com.example.checked.infra.CheckListPersistence;
 import com.example.checked.model.ItemChecklist;
+import com.example.checked.view.HomeActivity;
+import com.example.checked.view.fragment.DefaultFragment;
 
 import java.util.List;
 
 public class ChecklistItemRecyclerViewAdapter extends RecyclerView.Adapter<ChecklistItemRecyclerViewAdapter.ViewHolder> {
 
     public List<ItemChecklist> mValues;
-    private View.OnClickListener onClickItem;
+    private FragmentManager fragmentManager;
+    private TextView title;
 
-    public ChecklistItemRecyclerViewAdapter(List<ItemChecklist> items, View.OnClickListener onClickItem) {
+    public ChecklistItemRecyclerViewAdapter(List<ItemChecklist> items, FragmentManager fragmentManager, TextView title) {
         mValues = items;
-        this.onClickItem = onClickItem;
+        this.fragmentManager = fragmentManager;
+        this.title = title;
     }
 
     @Override
@@ -36,7 +42,17 @@ public class ChecklistItemRecyclerViewAdapter extends RecyclerView.Adapter<Check
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.title.setText(mValues.get(position).getTitle());
-        holder.itemList.setOnClickListener(onClickItem);
+        holder.itemList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeActivity.fragmentBase = DefaultFragment.newInstance(mValues.get(holder.getAbsoluteAdapterPosition()).getId(), title);
+
+                fragmentManager.
+                        beginTransaction().
+                        replace(R.id.container, HomeActivity.fragmentBase).
+                        commit();
+            }
+        });
 
     }
 

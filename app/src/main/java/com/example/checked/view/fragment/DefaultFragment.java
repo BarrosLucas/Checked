@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.checked.R;
 import com.example.checked.infra.ItemListPersistence;
+import com.example.checked.model.ItemChecklist;
 import com.example.checked.utils.ViewDialog;
 import com.example.checked.view.adapter.TaskItemRecyclerViewAdapter;
 import com.example.checked.infra.CheckListPersistence;
@@ -37,14 +38,16 @@ public class DefaultFragment extends FragmentBase {
     private RecyclerView recyclerView;
     private long idChecklist;
     private TextView currentDay;
+    private TextView title;
 
-    public DefaultFragment(long idChecklist) {
+    public DefaultFragment(long idChecklist, TextView title) {
         this.idChecklist = idChecklist;
+        this.title = title;
     }
 
 
-    public static DefaultFragment newInstance(long idChecklist) {
-        DefaultFragment fragment = new DefaultFragment(idChecklist);
+    public static DefaultFragment newInstance(long idChecklist, TextView title) {
+        DefaultFragment fragment = new DefaultFragment(idChecklist,title);
         return fragment;
     }
 
@@ -63,8 +66,16 @@ public class DefaultFragment extends FragmentBase {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         currentDay = (TextView) view.findViewById(R.id.current_day);
-
         currentDay.setText(setDay());
+
+        setTitle(title);
+        if((new CheckListPersistence(getContext())).selectByID(idChecklist).isDefault()){
+            currentDay.setVisibility(View.VISIBLE);
+        }else{
+            currentDay.setVisibility(View.INVISIBLE);
+        }
+
+
         updateList();
 
         return view;
@@ -114,8 +125,18 @@ public class DefaultFragment extends FragmentBase {
         );
     }
 
+    @Override
+    public void setTitle(TextView textView){
+        ItemChecklist itemChecklist = (new CheckListPersistence(getContext()).selectByID(idChecklist));
+        if(itemChecklist.isDefault()){
+            textView.setText(getString(R.string.app_name));
+        }else{
+            textView.setText(itemChecklist.getTitle());
+        }
+    }
+
     private void updateList(){
-        mAdapter = new TaskItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectDefault().getTaskList());
+        mAdapter = new TaskItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectByID(idChecklist).getTaskList());
         recyclerView.setAdapter(mAdapter);
         enableSwipeToDelete();
     }

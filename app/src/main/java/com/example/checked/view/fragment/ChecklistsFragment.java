@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,16 +30,23 @@ import java.util.Calendar;
 public class  ChecklistsFragment extends FragmentBase {
     private ChecklistItemRecyclerViewAdapter mAdapter;
     private RecyclerView recyclerView;
-    private View.OnClickListener onClickItem;
+    private FragmentManager fragmentManager;
+    private TextView title;
 
-    public ChecklistsFragment(View.OnClickListener onClickItem) {
-        this.onClickItem = onClickItem;
+    public ChecklistsFragment(FragmentManager fragmentManager, TextView title) {
+        this.fragmentManager = fragmentManager;
+        this.title = title;
     }
 
 
-    public static ChecklistsFragment newInstance(View.OnClickListener onClickItem) {
-        ChecklistsFragment fragment = new ChecklistsFragment(onClickItem);
+    public static ChecklistsFragment newInstance(FragmentManager fragmentManager, TextView title) {
+        ChecklistsFragment fragment = new ChecklistsFragment(fragmentManager, title);
         return fragment;
+    }
+
+    @Override
+    public void setTitle(TextView title){
+        title.setText(getString(R.string.checklists));
     }
 
     @Override
@@ -55,6 +63,7 @@ public class  ChecklistsFragment extends FragmentBase {
         recyclerView = (RecyclerView) view.findViewById(R.id.list_checklists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        setTitle(title);
         updateList();
 
         return view;
@@ -105,7 +114,7 @@ public class  ChecklistsFragment extends FragmentBase {
     }
 
     private void updateList(){
-        mAdapter = new ChecklistItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectAll(), onClickItem);
+        mAdapter = new ChecklistItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectAll(), fragmentManager, title);
         recyclerView.setAdapter(mAdapter);
         enableSwipeToDelete();
     }
