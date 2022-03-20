@@ -20,7 +20,7 @@
                 android:fontFamily="@font/jua"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/subtitle_size"
+                android:textSize="@dimen/subtitle_default"
                 android:text="18 de março de 2022" />
         </RelativeLayout>
 

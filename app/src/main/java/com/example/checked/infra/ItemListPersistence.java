@@ -74,6 +74,20 @@ public class ItemListPersistence {
         return true;
     }
 
+    public boolean deleteItensByChecklist(long idChecklist){
+        int result;
+
+        String where = CheckedDatabase.ITEM_ID_CHECK + " = " +idChecklist;
+        db = database.getReadableDatabase();
+        result = db.delete(CheckedDatabase.TABLE_ITEMLIST, where, null);
+
+        if(result == -1){
+            return false;
+        }
+
+        return true;
+    }
+
     public ItemTask selectByID(long id){
         ItemTask item = null;
         Cursor cursor;

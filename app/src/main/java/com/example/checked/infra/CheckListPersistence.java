@@ -65,6 +65,8 @@ public class CheckListPersistence {
     public boolean deleteChecklist(long id){
         int result;
 
+        (new ItemListPersistence(context)).deleteItensByChecklist(id);
+
         String where = CheckedDatabase.CHECKLIST_ID + " = " +id;
         db = database.getReadableDatabase();
         result = db.delete(CheckedDatabase.TABLE_CHECKLIST, where, null);

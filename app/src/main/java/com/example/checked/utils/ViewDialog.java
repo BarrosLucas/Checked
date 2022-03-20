@@ -17,6 +17,8 @@ public class ViewDialog {
     private String title;
     private TextView ok;
     private TextView no;
+    private TextView titleView;
+    private TextView messageView;
 
 
     public Dialog showDialogNewTask(Activity activity, long idChecklist){
@@ -62,6 +64,31 @@ public class ViewDialog {
         });
         no.setOnClickListener((view -> {dialog.dismiss();}));
 
+        dialog.show();
+
+        return dialog;
+    }
+
+    public Dialog showMessageDialog(Activity activity, String title, String message){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_dialog_msg);
+
+        titleView = (TextView) dialog.findViewById(R.id.txt_title);
+        messageView = (TextView) dialog.findViewById(R.id.message);
+
+        ok = (TextView) dialog.findViewById(R.id.btn_yes);
+
+        titleView.setText(title);
+        messageView.setText(message);
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
 
         return dialog;

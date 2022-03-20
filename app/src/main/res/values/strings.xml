@@ -10,4 +10,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="checklists">Checklists</string>
+    <string name="item_deleted">Item removido da lista</string>
+    <string name="undo">Desfazer</string>
+
+    <string name="error_on_delete">Falha para deletar</string>
+    <string name="error_delete">O item selecionado não pôde ser deletado.</string>
+    <string name="error_delete_default">Esse é seu checklist padrão e não pode ser deletado.</string>
 </resources>

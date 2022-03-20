@@ -1,5 +1,6 @@
 package com.example.checked.view.fragment;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -79,9 +80,9 @@ public class  ChecklistsFragment extends FragmentBase {
 
                 if(mAdapter.deleteItem(getContext(), position)){
                     Snackbar snackbar = Snackbar
-                            .make(viewHolder.itemView, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                            .make(viewHolder.itemView, getString(R.string.item_deleted), Snackbar.LENGTH_LONG);
                     updateList();
-                    snackbar.setAction("UNDO", new View.OnClickListener() {
+                    snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             mAdapter.restoreItem(getContext(), item, position);
@@ -91,6 +92,9 @@ public class  ChecklistsFragment extends FragmentBase {
                     });
                     snackbar.setActionTextColor(Color.YELLOW);
                     snackbar.show();
+                }else{
+                    updateList();
+                    (new ViewDialog()).showMessageDialog(getActivity(), getString(R.string.error_on_delete), getString(R.string.error_delete_default));
                 }
 
             }
