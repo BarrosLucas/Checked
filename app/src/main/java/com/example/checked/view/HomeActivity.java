@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.checked.AboutMeActivity;
 import com.example.checked.R;
 import com.example.checked.infra.CheckListPersistence;
 import com.example.checked.utils.ViewDialog;
@@ -94,6 +96,11 @@ public class HomeActivity extends FragmentActivity implements NavigationView.OnN
                 fragmentBase = ChecklistsFragment.newInstance(getSupportFragmentManager(), titlePage);
                 updateContent(fragmentBase);
                 page = 1;
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                return true;
+            case R.id.nav_share:
+                Intent i = new Intent(this, AboutMeActivity.class);
+                startActivity(i);
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 return true;
             default:
