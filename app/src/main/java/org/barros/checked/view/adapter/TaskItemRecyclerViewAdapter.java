@@ -34,14 +34,6 @@ public class TaskItemRecyclerViewAdapter extends RecyclerView.Adapter<TaskItemRe
     }
 
     @Override
-    public void onViewRecycled(@NonNull ViewHolder holder) {
-        if (holder.mCheck != null) {
-            holder.mCheck.setChecked(mValues.get(holder.getAbsoluteAdapterPosition()).isDone());
-        }
-        super.onViewRecycled(holder);
-    }
-
-    @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mCheck.setChecked(mValues.get(position).isDone());
