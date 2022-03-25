@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/margin_default"
+    android:paddingVertical="@dimen/margin_vertical_item"
     android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/item_check"
-        android:layout_marginVertical="@dimen/margin_item"
-        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/margin_item"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="@dimen/button_size"

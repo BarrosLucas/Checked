@@ -16,6 +16,8 @@
     <string name="error_on_delete">Falha para deletar</string>
     <string name="error_delete">O item selecionado não pôde ser deletado.</string>
     <string name="error_delete_default">Esse é seu checklist padrão e não pode ser deletado.</string>
+    <string name="out">Sair</string>
+    <string name="out_message">Deseja realmente sair?</string>
 
     <string name="about_me">Olá! Esse é um aplicativo desenvolvido na genuína intenção de ajudar pessoas a ter um controle melhor sobre suas tarefas. Muitas pessoas desenvolvem sintomas de ansiedade pelo simples fato de não conseguir ter um controle a respeito das coisas que precisam ser feitas e, sendo assim, sem nenhum fim financeiro, o aplicativo visa ajudar pessoas em geral e, principalmente, servir como mais uma ferramenta a favor desse público.</string>
 </resources>

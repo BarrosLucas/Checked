@@ -10,7 +10,8 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/custom_dialog_msg.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/custom_dialog_default.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/custom_dialog_msg.xml" value="0.16" />
         <entry key="app/src/main/res/layout/drawer_navigation.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/fragment_check_list.xml" value="0.19270833333333334" />

@@ -9,7 +9,7 @@
     android:layout_gravity="center"
     android:background="@color/primary_color_app"
     android:gravity="center"
-    tools:context=".AboutMeActivity">
+    tools:context="org.barros.checked.AboutMeActivity">
 
     <TextView
         android:layout_width="match_parent"

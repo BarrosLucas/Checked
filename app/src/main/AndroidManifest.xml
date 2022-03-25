@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.checked">
+    package="org.barros.checked">
 
     <application
         android:allowBackup="true"
@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Checked">
         <activity
-            android:name=".AboutMeActivity"
-            android:parentActivityName=".view.HomeActivity"
+            android:name="org.barros.checked.AboutMeActivity"
+            android:parentActivityName="org.barros.checked.view.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.HomeActivity"
+            android:name="org.barros.checked.view.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name="org.barros.checked.view.MainActivity"
             android:exported="true"
             android:theme="@style/AppFullScreenTheme">
             <intent-filter>

@@ -10,6 +10,7 @@
     <dimen name="button_size">24sp</dimen>
     <dimen name="edit_text_dialog">230dp</dimen>
     <dimen name="margin_item">7dp</dimen>
+    <dimen name="margin_vertical_item">3dp</dimen>
     <dimen name="margin_top_edit_text_dialog">35dp</dimen>
     <dimen name="margin_bottom_edit_text_dialog">20dp</dimen>
 </resources>
