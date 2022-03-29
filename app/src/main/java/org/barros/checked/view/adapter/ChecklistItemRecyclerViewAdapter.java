@@ -45,7 +45,7 @@ public class ChecklistItemRecyclerViewAdapter extends RecyclerView.Adapter<Check
         holder.itemList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeActivity.fragmentBase = DefaultFragment.newInstance(mValues.get(holder.getAbsoluteAdapterPosition()).getId(), title);
+                HomeActivity.fragmentBase = DefaultFragment.newInstance(mValues.get(holder.getAbsoluteAdapterPosition()).getId());
 
                 fragmentManager.
                         beginTransaction().

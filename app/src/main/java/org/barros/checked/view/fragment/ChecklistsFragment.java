@@ -19,6 +19,7 @@ import org.barros.checked.infra.CheckListPersistence;
 import org.barros.checked.model.ItemChecklist;
 import org.barros.checked.utils.SwipeToDeleteCallback;
 import org.barros.checked.utils.ViewDialog;
+import org.barros.checked.view.HomeActivity;
 import org.barros.checked.view.adapter.ChecklistItemRecyclerViewAdapter;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -26,23 +27,20 @@ import com.google.android.material.snackbar.Snackbar;
 public class  ChecklistsFragment extends FragmentBase {
     private ChecklistItemRecyclerViewAdapter mAdapter;
     private RecyclerView recyclerView;
-    private FragmentManager fragmentManager;
-    private TextView title;
 
-    public ChecklistsFragment(FragmentManager fragmentManager, TextView title) {
-        this.fragmentManager = fragmentManager;
-        this.title = title;
+    public ChecklistsFragment() {
+
     }
 
 
-    public static ChecklistsFragment newInstance(FragmentManager fragmentManager, TextView title) {
-        ChecklistsFragment fragment = new ChecklistsFragment(fragmentManager, title);
+    public static ChecklistsFragment newInstance() {
+        ChecklistsFragment fragment = new ChecklistsFragment();
         return fragment;
     }
 
     @Override
-    public void setTitle(TextView title){
-        title.setText(getString(R.string.checklists));
+    public void setTitle(){
+        HomeActivity.titlePage.setText(getString(R.string.checklists));
     }
 
     @Override
@@ -59,7 +57,7 @@ public class  ChecklistsFragment extends FragmentBase {
         recyclerView = (RecyclerView) view.findViewById(R.id.list_checklists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        setTitle(title);
+        setTitle();
         updateList();
 
         return view;
@@ -113,7 +111,7 @@ public class  ChecklistsFragment extends FragmentBase {
     }
 
     private void updateList(){
-        mAdapter = new ChecklistItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectAll(), fragmentManager, title);
+        mAdapter = new ChecklistItemRecyclerViewAdapter((new CheckListPersistence(getContext())).selectAll(), HomeActivity.fragmentManager, HomeActivity.titlePage);
         recyclerView.setAdapter(mAdapter);
         enableSwipeToDelete();
     }

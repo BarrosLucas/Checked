@@ -19,6 +19,7 @@ import org.barros.checked.R;
 
 import org.barros.checked.model.ItemChecklist;
 import org.barros.checked.utils.ViewDialog;
+import org.barros.checked.view.HomeActivity;
 import org.barros.checked.view.adapter.TaskItemRecyclerViewAdapter;
 import org.barros.checked.infra.CheckListPersistence;
 import org.barros.checked.model.ItemTask;
@@ -37,16 +38,20 @@ public class DefaultFragment extends FragmentBase {
     private RecyclerView recyclerView;
     private long idChecklist;
     private TextView currentDay;
-    private TextView title;
+    private static final String CHECKLIST_ID = "checklist_id";
 
-    public DefaultFragment(long idChecklist, TextView title) {
-        this.idChecklist = idChecklist;
-        this.title = title;
+    public DefaultFragment() {
+
+
     }
 
 
-    public static DefaultFragment newInstance(long idChecklist, TextView title) {
-        DefaultFragment fragment = new DefaultFragment(idChecklist,title);
+    public static DefaultFragment newInstance(long idChecklist) {
+        Bundle args = new Bundle();
+        args.putLong(CHECKLIST_ID,idChecklist);
+
+        DefaultFragment fragment = new DefaultFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -59,6 +64,12 @@ public class DefaultFragment extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if(getArguments() != null){
+            if(getArguments().getLong(CHECKLIST_ID) != 0){
+                this.idChecklist = getArguments().getLong(CHECKLIST_ID);
+            }
+        }
         View view = inflater.inflate(R.layout.fragment_default, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
@@ -67,7 +78,6 @@ public class DefaultFragment extends FragmentBase {
         currentDay = (TextView) view.findViewById(R.id.current_day);
         currentDay.setText(setDay());
 
-        setTitle(title);
         if((new CheckListPersistence(getContext())).selectByID(idChecklist).isDefault()){
             currentDay.setVisibility(View.VISIBLE);
         }else{
@@ -128,12 +138,12 @@ public class DefaultFragment extends FragmentBase {
     }
 
     @Override
-    public void setTitle(TextView textView){
+    public void setTitle(){
         ItemChecklist itemChecklist = (new CheckListPersistence(getContext()).selectByID(idChecklist));
         if(itemChecklist.isDefault()){
-            textView.setText(getString(R.string.app_name));
+            HomeActivity.titlePage.setText(getString(R.string.app_name));
         }else{
-            textView.setText(itemChecklist.getTitle());
+            HomeActivity.titlePage.setText(itemChecklist.getTitle());
         }
     }
 

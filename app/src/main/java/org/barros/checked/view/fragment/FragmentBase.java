@@ -6,5 +6,5 @@ import androidx.fragment.app.Fragment;
 
 public abstract class FragmentBase extends Fragment {
     public abstract void addItem();
-    public abstract void setTitle(TextView title);
+    public abstract void setTitle();
 }
